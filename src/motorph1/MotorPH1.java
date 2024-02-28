@@ -11,8 +11,9 @@ import java.util.Scanner;
 public class MotorPH1 {
     private static final String[] usernames = {"user1", "user2", "user3"};
     private static final String[] passwords = {"123", "456", "789"};
-    private static final String attendanceCsvFile = "C:\\Users\\IT-Spare\\Documents\\NetBeansProjects\\MotorPH1\\src\\motorph1\\MotorPH Attendance Details.csv"; // Path to your attendance CSV file
     
+    // Path to your attendance CSV file
+    private static final String attendanceCsvFile = "C:\\Users\\IT-Spare\\Documents\\NetBeansProjects\\MotorPH1\\src\\motorph1\\MotorPH Attendance Details.csv"; 
     private static final String csvSplitBy = ",";
 
     public static void main(String[] args) {
@@ -197,6 +198,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
         String line;
         boolean employeeFound = false; // Flag to track if employee is found
         double totalWorkHours = 0; // Use double for decimal values
+        double attendanceCount = 0; // Counter for attendance entries
 
         // Read and process attendance CSV file
         while ((line = br.readLine()) != null) {
@@ -207,12 +209,17 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 attendanceData[0].trim().equals(employeeNumber.trim()) && 
                 attendanceData[7].trim().equalsIgnoreCase(month.trim()) && 
                 attendanceData[8].trim().equalsIgnoreCase(week.trim())) {
+                System.out.println("  Last Name: " + attendanceData[1]);
+                System.out.println("  First Name: " + attendanceData[2]);
+                // Increment attendance count
+                attendanceCount++;
                 
+             
+             
                 // Display attendance details
                 System.out.println("\nATTENDANCE DETAILS:");
                 System.out.println("  Employee Number: " + attendanceData[0]);
-                System.out.println("  Last Name: " + attendanceData[1]);
-                System.out.println("  First Name: " + attendanceData[2]);
+                
                 System.out.println("  Date: " + attendanceData[3]);
                 System.out.println("  Time In: " + attendanceData[4]);
                 System.out.println("  Time Out: " + attendanceData[5]);
@@ -241,13 +248,22 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
 
                 // Display additional details as needed
                 employeeFound = true; // Set flag to true
+                
+             
             }
         }
+        
+        
 
         if (employeeFound) {
-            System.out.printf("\nTotal Work Hours This Week: %.2f hrs\n", totalWorkHours);
-            
-            
+            double AttendanceTotal = (attendanceCount * 8);
+          
+            System.out.println("\nTotal Attendance Entries:" + attendanceCount);
+            System.out.printf("Total Hours Entries:%.2f hrs\n" , AttendanceTotal);
+            System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
+            double Tardiness = (AttendanceTotal - totalWorkHours);
+            System.out.printf("Tardiness: %.2f hrs\n", Tardiness);
+
             
         } else {
             System.out.println("Attendance not found for the employee in the specified month and week.");
@@ -265,6 +281,8 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
         String line;
         boolean employeeFound = false; // Flag to track if employee is found
         double totalWorkHours = 0; // Use double for decimal values
+        double attendanceCount = 0; // Counter for attendance entries
+
         float basicSalary = 0; // Initialize basicsalary rate 
         float riceSubsidy = 0; // Initialize riceSubsidy rate
         float phoneAllowance = 0; // Initialize phone allowance rate
@@ -279,7 +297,8 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
         
         String employeeLastName = "";
         String employeeFirstName = "";
-
+     
+     
         // Read and process attendance CSV file
         while ((line = br.readLine()) != null) {
             String[] attendanceData = line.split(csvSplitBy);
@@ -290,14 +309,39 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 attendanceData[7].trim().equalsIgnoreCase(month.trim()) && 
                 attendanceData[8].trim().equalsIgnoreCase(week.trim())) {
                 
+                // Increment attendance count
+                attendanceCount++;
+                
+             
+             
+                /* Display attendance details
+                System.out.println("\nATTENDANCE DETAILS:");
+                System.out.println("  Employee Number: " + attendanceData[0]);
+                
+                System.out.println("  Date: " + attendanceData[3]);
+                System.out.println("  Time In: " + attendanceData[4]);
+                System.out.println("  Time Out: " + attendanceData[5]);*/
+                
                 // Calculate work hours as decimal
                 LocalTime timeIn = LocalTime.parse(attendanceData[4]);
                 LocalTime timeOut = LocalTime.parse(attendanceData[5]);
                 Duration duration = Duration.between(timeIn, timeOut);
                 double decimalHours = duration.toMinutes() / 60.0 - 1; // Convert minutes to decimal hours
-                
+                //System.out.printf("  Total Work Hours This Day: %.2f hrs\n", decimalHours ) ;
+               
+                //Grace Period, absences and halfday
+                if (decimalHours > 7.82) {
+                decimalHours = 8.0;
+                } else if (decimalHours <= 0) {
+                 decimalHours = 0.0;
+                } else if (decimalHours <= 4) {
+                 decimalHours = decimalHours + 1;
+                }
+                //System.out.printf("  Total Work Hours This Day: %.2f hrs\n", decimalHours);
+
                 // Accumulate total work hours
                 totalWorkHours += decimalHours;
+
                 
                 // Retrieve hourly rate from the employee details
                 String employeeCsvFile = "C:\\Users\\IT-Spare\\Documents\\NetBeansProjects\\MotorPH1\\src\\motorph1\\MotorPH Employee Details.csv";
@@ -313,9 +357,11 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 employeeFirstName = attendanceData[2].trim(); 
                 
                 employeeFound = true; 
-                break; 
+               //break;
             }
         }
+                
+             
 
         if (employeeFound) {
             if (totalWorkHours > 0) {
@@ -324,19 +370,19 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
         
     System.out.println("\nEmployee Name: " + employeeFirstName + " " + employeeLastName);
     System.out.println("\nEMPLOYEE RATE : ");  
-    System.out.println("\nMonthly Basic : " + basicSalary);  
-    System.out.println("Monthly RiceSubsidy: " + riceSubsidy);  
-    System.out.println("Monthly Phone Allowance: " + phoneAllowance);
-    System.out.println("Monthly Clothing Allowance : " + clothingAllowance);
-    System.out.println("Weekly Basic: " + basicSalary / 4);
-    System.out.println("Weekly RiceSubsidy: " + riceSubsidy / 4);  
-    System.out.println("Weekly Phone Allowance: " + phoneAllowance / 4);
-    System.out.println("Weekly Clothing Allowance : " + clothingAllowance / 4);
+    System.out.println("Monthly Basic : " + basicSalary + ", Weekly Basic: " + basicSalary / 4);  
+    System.out.println("Monthly RiceSubsidy: " + riceSubsidy + ", Weekly RiceSubsidy: " + riceSubsidy / 4);  
+    System.out.println("Monthly Phone Allowance: " + phoneAllowance + ", Weekly Phone Allowance: " + phoneAllowance / 4);
+    System.out.println("Monthly Clothing Allowance : " + clothingAllowance + ", Weekly Clothing Allowance : " + clothingAllowance / 4);
+   
     System.out.println("Gross Semi-Month Rate : " + grossSemiMonthRate);
-    System.out.println("Hourly Rate: " + hourlyRate);
+    
     
     System.out.printf("\nEARNINGS:");
-    System.out.printf("\nTotal Work Hours This Week: %.2f hrs\n", totalWorkHours);
+    System.out.printf("\nHourly Rate: %.2f hrs\n", hourlyRate);
+    System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
+    
+    
     
     System.out.printf("\nWeekly GROSS (HourlyRate * HoursWorkedForTheWeek): %.2f\n", weeklyGross); //%.2f in the printf to print 2 decimal amount
     System.out.println("Weekly Allowances (riceSubsidy + phoneAllowance + clothingAllowance): " + allowances);
@@ -344,12 +390,19 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
     float earnings = (weeklyGross + (allowances));  // + allowances     
                 System.out.printf("\nTOTAL EARNINGS:%.2f\n", earnings);
     
-                // ----------------DEDUCTIONS ER SHARE----------------
+                // ----------------DEDUCTIONS EE SHARE----------------
                 System.out.printf("\nDEDUCTIONS (Employee Deductions & EE Share):");
                 
                 //Tardiness
                 System.out.printf("\nTardiness: ");
-                
+                //tardiness
+             double AttendanceTotal = (attendanceCount * 8);
+             System.out.println("\nTotal Attendance Entries:" + attendanceCount);
+             System.out.printf("Total Hours Entries:%.2f hrs\n" , AttendanceTotal);
+             System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
+             double Tardiness = (AttendanceTotal - totalWorkHours);
+             System.out.printf("Tardiness: %.2f hrs \n", Tardiness);
+             //System.out.println("Tardiness is already deducted from the Work Hours This Week");
                 //Pagibig =(IF(basicSalary<=1500,(basicSalary*1%),(basicSalary*2%)))/4
               
                 if (basicSalary <= 999) {
@@ -364,7 +417,6 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 pagibigRate = 25;
                 }
                 System.out.printf("\nPagibig Rate: %.2f\n", pagibigRate);
-                
                 
 
                 //Philhealth 
@@ -417,7 +469,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 
                 // ----------------TOTAL DEDUCTIONS ER SHARE----------------
                 System.out.printf("\nDEDUCTIONS (ER Employer Share):");
-                System.out.printf("\nPaibig Rate: %.2f\n", pagibigRate);
+                System.out.printf("\nPaibig Rate: %.2f\n", pagibigRate );
                 System.out.printf("Philhealth Rate: %.2f\n", philhealthRate);
                 System.out.printf("SSS Rate: %.2f\n", sssRate);
                 
@@ -436,11 +488,11 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
             System.out.println("Employee not found or no attendance recorded for the specified month and week.");
         }
     } catch (IOException e) {
-        e.printStackTrace();
+       // e.printStackTrace();
     }
 }
   
-  
+
 
 
     //------------------- Payroll Wage Elements --------------------------------
@@ -620,7 +672,6 @@ public static float gethourlyRateFromEmployeeDetails(String csvFile, String empl
     return hourlyRate;
     }
 }
-
 
 
 
