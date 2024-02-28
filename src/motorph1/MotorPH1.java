@@ -394,7 +394,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 System.out.printf("\nDEDUCTIONS (Employee Deductions & EE Share):");
                 
                 //Tardiness
-                System.out.printf("\nTardiness: ");
+             //   System.out.printf("\nTardiness: ");
                 //tardiness
              double AttendanceTotal = (attendanceCount * 8);
              System.out.println("\nTotal Attendance Entries:" + attendanceCount);
