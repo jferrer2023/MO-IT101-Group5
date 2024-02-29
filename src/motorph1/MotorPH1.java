@@ -371,31 +371,32 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
             if (totalWorkHours > 0) {
                 float weeklyGross = hourlyRate * (float) totalWorkHours;
                 float allowances = (riceSubsidy + phoneAllowance + clothingAllowance) / 4; 
-        
+        System.out.println("------------------------------------------------------------------------------");
         System.out.println("\nEmployee Name: " + employeeFirstName + " " + employeeLastName);
-        System.out.println("\nEMPLOYEE RATE : ");  
+        System.out.println("------------------------------------------------------------------------------");
+        System.out.println("EMPLOYEE RATE : ");  
         System.out.println("Monthly Basic : " + basicSalary + ", Weekly Basic: " + basicSalary / 4);  
         System.out.println("Monthly RiceSubsidy: " + riceSubsidy + ", Weekly RiceSubsidy: " + riceSubsidy / 4);  
         System.out.println("Monthly Phone Allowance: " + phoneAllowance + ", Weekly Phone Allowance: " + phoneAllowance / 4);
         System.out.println("Monthly Clothing Allowance : " + clothingAllowance + ", Weekly Clothing Allowance : " + clothingAllowance / 4);
    
-        System.out.println("Gross Semi-Month Rate : " + grossSemiMonthRate);
+        System.out.printf("Gross Semi-Month Rate : %.2f\n", grossSemiMonthRate);
     
-    
-        System.out.printf("\nEARNINGS:");
+        System.out.println("------------------------------------------------------------------------------");
+        System.out.printf("EARNINGS:");
         System.out.printf("\nHourly Rate: %.2f hrs\n", hourlyRate);
         System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
-    
+        System.out.println("------------------------------------------------------------------------------");
     
         //%.2f in the printf to print 2 decimal amount
-        System.out.printf("\nWeekly GROSS (HourlyRate * HoursWorkedForTheWeek): %.2f\n", weeklyGross); //%.2f in the printf to print 2 decimal amount
+        System.out.printf("Weekly GROSS (HourlyRate * HoursWorkedForTheWeek): %.2f\n", weeklyGross); //%.2f in the printf to print 2 decimal amount
         System.out.println("Weekly Allowances (riceSubsidy + phoneAllowance + clothingAllowance): " + allowances);
                 
                 float earnings = (weeklyGross + (allowances));  // + allowances     
-                System.out.printf("\nTOTAL EARNINGS:%.2f\n", earnings);
-    
+                System.out.printf("\n***TOTAL EARNINGS:%.2f\n", earnings);
+                System.out.println("------------------------------------------------------------------------------");       
                 // ----------------DEDUCTIONS EE SHARE----------------
-                System.out.printf("\nDEDUCTIONS (Employee Deductions & EE Share):");
+                System.out.printf("DEDUCTIONS (Employee Deductions & EE Share):");
                 
              
                 //Tardiness
@@ -463,7 +464,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 }
                 System.out.printf("Tax Rate: %.2f\n", taxRate);
    
-  
+           
                 // ----------------TOTAL DEDUCTIONS ER SHARE----------------
                 System.out.printf("\nDEDUCTIONS (ER Employer Share):");
                 System.out.printf("\nPaibig Rate: %.2f\n", pagibigRate );
@@ -471,12 +472,13 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 System.out.printf("SSS Rate: %.2f\n", sssRate);
                 
                 // ----------------TOTAL DEDUCTIONS EE SHARE----------------
+        
                 float deductions = (pagibigRate + philhealthRate + taxRate + sssRate);  //+ sssRate + philhealthRate +  + taxRate;
-                System.out.printf("\nTOTAL EMPLOYEE DEDUCTIONS :%.2f\n", deductions);
-                
+                System.out.printf("\n***TOTAL EMPLOYEE DEDUCTIONS :%.2f\n", deductions);
+                System.out.println("------------------------------------------------------------------------------");    
                 // ----------------NetPay----------------
                 float netPay = (earnings - deductions);  //+ sssRate + philhealthRate +  + taxRate;
-                System.out.printf("\nNET PAY :%.2f\n", netPay);   
+                System.out.printf("\n***NET PAY :%.2f\n", netPay);   
 
             } else {
                 System.out.println("Employee found but no attendance recorded for the specified month and week.");
