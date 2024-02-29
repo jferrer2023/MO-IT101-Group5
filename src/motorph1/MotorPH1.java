@@ -1,30 +1,34 @@
 //Comprog1-MO-IT101-Group5
 //By: Group 5 - Jeffrey Dollopac, Joyce Ferrer, Ryu Ken Lindo, Mikko Jerome Bautista, 
-//TEST
 
-package motorph1;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalTime;
-import java.util.Scanner;
+package motorph1;  // Package declaration
+
+// Import necessary Java classes
+import java.io.BufferedReader; //used for reading text from a character-input stream
+import java.io.FileReader;     //used for reading files in the file system
+import java.io.IOException;    //allows you to use the IOException class, which is an exception that is thrown when an I/O operation fails.
+import java.time.Duration;     //duration of seconds or hours
+import java.time.LocalTime;    //allows to use the LocalTime class which represents a time without a date or time zone
+import java.util.Scanner;      //allows you to use the Scanner class, which is used for parsing primitive types and strings from the input stream.
 
 
 public class MotorPH1 {
+    //array of predefined usernames and passwords 
     private static final String[] usernames = {"user1", "user2", "user3"};
     private static final String[] passwords = {"123", "456", "789"};
     
-    // Path to your attendance CSV file
+    //attendance CSV file Path
     private static final String attendanceCsvFile = "C:\\Users\\IT-Spare\\Documents\\NetBeansProjects\\MotorPH1\\src\\motorph1\\MotorPH Attendance Details.csv"; 
-    private static final String csvSplitBy = ",";
+    private static final String csvSplitBy = ",";    //CSV file delimiter to separate the data by "," 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {    // Main method
+        // Try-with-resources to automatically close the input scanneror else will use scanner.close();
         try (Scanner scanner = new Scanner(System.in)) {
             String enteredUsername = "";
             String enteredPassword = "";
             
+            // Infinite loop for login until correct credentials are entered
             while (true) {
                 System.out.println("\nWELCOME TO MOTORPH");
                 System.out.print("\nEnter username: ");
@@ -33,19 +37,19 @@ public class MotorPH1 {
                 enteredPassword = scanner.nextLine();
 
                 int index = -1;
-                for (int i = 0; i < usernames.length; i++) {
-                    if (enteredUsername.equals(usernames[i]) && enteredPassword.equals(passwords[i])) {
+                for (int i = 0; i < usernames.length; i++) {    // Loop through predefined usernames and passwords
+                    if (enteredUsername.equals(usernames[i]) && enteredPassword.equals(passwords[i])) {   // Check if username and password match
                         index = i;
                         break;
                     }
                 }
-                if (index != -1) {
+                if (index != -1) {    
                     // Authentication successful
 
                     boolean backToMainMenu = false;
                     boolean logout = false;
 
-                    do {
+                    do {    // Loop for Main Menu Options
                         System.out.println("\nMAIN MENU");
                         System.out.println("  Option [1] - Employee Personal Details");
                         System.out.println("  Option [2] - Employee Attendance");
@@ -58,13 +62,14 @@ public class MotorPH1 {
 
                         boolean repeatCurrentOption = false;
                         switch (optionNumber) {
-                            case 1:
+                            case 1: // Option 1: Employee Personal Details
                                 System.out.println("\nEmployee Personal Details:");
                                 System.out.print("Enter Employee ID Number: ");
                                 String inputEmployeeNumber = scanner.nextLine();
                                 displayEmployeeDetails("C:\\Users\\IT-Spare\\Documents\\NetBeansProjects\\MotorPH1\\src\\motorph1\\MotorPH Employee Details.csv", inputEmployeeNumber);
+                                //displayEmployeeDetails method to call the code for Option 1 - Employee Details
                                 break;
-                            case 2:
+                            case 2: // Option 2: Employee Attendance
                                 System.out.println("\nEmployee Attendance:");
                                 System.out.print("Enter Employee ID Number: ");
                                 String inputEmployeeNumber2 = scanner.nextLine();
@@ -73,8 +78,9 @@ public class MotorPH1 {
                                 System.out.print("Enter Week:(Format- dd-mmm-yy:e.g. 03-jan-22):");
                                 String inputWeek = scanner.nextLine();
                                 displayEmployeeAttendance(inputEmployeeNumber2, inputMonth, inputWeek);
+                                //displayEmployeeAttendance method to call the code for Option 2 - Attendance
                                 break;
-                            case 3:
+                            case 3: // Option 3: Employee Payroll Details
                                 System.out.println("\nEmployee Payroll Details");
                                 System.out.print("Enter Employee ID Number: ");
                                 String inputEmployeeNumber3 = scanner.nextLine();
@@ -83,12 +89,13 @@ public class MotorPH1 {
                                 System.out.print("Enter Week:(Format- dd-mmm-yy:e.g. 03-jan-22):");
                                 String inputWeek2 = scanner.nextLine();
                                 displayEmployeeAttendancePayroll(inputEmployeeNumber3, inputMonth2, inputWeek2);
+                                //displayEmployeeAttendancePayroll method to call the code for Option 3 - Payroll Details
                                 break;
-                            case 4:
+                            case 4: //Option 4: Logout
                                 System.out.println("\nExiting program...");
                                 logout = true; 
                                 break;
-                            default:
+                            default:  // Default case for invalid options
                                 System.out.println("\nOption not valid. Please enter a valid option.");
                                 repeatCurrentOption = true;
                                 break;
@@ -98,7 +105,6 @@ public class MotorPH1 {
                             continue; // Repeat the current switch case
                         }
 
-                        // Ask user if they want to go back to the main menu
                         if (!logout) {
                             System.out.print("\nBack to Main Menu? (Y/N): ");
                             String answer = scanner.nextLine();
@@ -119,8 +125,6 @@ public class MotorPH1 {
 
 
 
-
-
     //-------------------OPTION 1 Data--------------------------------
     
     public static void displayEmployeeDetails(String csvFile, String employeeNumber) {
@@ -128,21 +132,24 @@ public class MotorPH1 {
             String line;
             boolean employeeFound = false; // Flag to track if employee is found
 
-        float basicSalary = 0;
-        float riceSubsidy = 0;
-        float phoneAllowance = 0;
-        float clothingAllowance = 0;
-        float grossSemiMonthRate = 0;
-        float hourlyRate = 0;
-        float minuteRate = 0;
+            //set to 0 to initializes the variable with a default value, ensuring it has a starting value even if not set elsewhere.
+            // Variables for salary details
+            float basicSalary = 0;
+            float riceSubsidy = 0;
+            float phoneAllowance = 0;
+            float clothingAllowance = 0;
+            float grossSemiMonthRate = 0;
+            float hourlyRate = 0;
+            float minuteRate = 0;
       
-            // Read and process CSV file
-            while ((line = br.readLine()) != null) {
-                String[] employeeData = line.split(csvSplitBy);
+            //Read and process CSV file
+            while ((line = br.readLine()) != null) {  //to read each line from a file using a BufferedReader (br) until the end of the file is reached
+                String[] employeeData = line.split(csvSplitBy);  // Split the line by comma
 
-                // Check if the employee ID matches
+                //Check if the employee ID matches
+                //This condition checks if the employeeData array has at least one element and ensures that there is data to be processed before attempting to access the first element of the array
                 if (employeeData.length > 0 && employeeData[0].trim().equals(employeeNumber.trim())) {
-                    // Display employee details
+                // Display employee details
                 System.out.println("\nPERSONAL DETAILS:");
                 System.out.println("  Employee Number: " + employeeData[0]);
                 System.out.println("  Last Name: " + employeeData[1]);
@@ -157,8 +164,8 @@ public class MotorPH1 {
                 System.out.println("  Status: " + employeeData[10]);
                 System.out.println("  Position: " + employeeData[11]);
                 System.out.println("  Immediate Supervisor: " + employeeData[12]);
-                    // Display additional details as needed
                     
+                //parseFloat is used to convert a string to float    
                 basicSalary = Float.parseFloat(employeeData[13]);
                 riceSubsidy = Float.parseFloat(employeeData[14]);
                 phoneAllowance = Float.parseFloat(employeeData[15]);
@@ -167,8 +174,8 @@ public class MotorPH1 {
                 hourlyRate = Float.parseFloat(employeeData[18]);
                 minuteRate = Float.parseFloat(employeeData[19]);    
                     
-                    
-                 float gross = basicSalary + riceSubsidy + phoneAllowance + clothingAllowance + grossSemiMonthRate + hourlyRate;
+                //set a variable for Gross calculation  
+                float gross = basicSalary + riceSubsidy + phoneAllowance + clothingAllowance + grossSemiMonthRate + hourlyRate;
                 
                 System.out.println("\nSALARY DETAILS:");
                 System.out.println("  Basic Salary: " + basicSalary);
@@ -179,8 +186,7 @@ public class MotorPH1 {
                 System.out.println("  Hourly Rate: " + hourlyRate);
                 System.out.println("  GROSS: " + gross);   
                     
-                    
-           
+                              
                     employeeFound = true; // Set flag to true
                     break; // Stop searching after finding the employee
                 }
@@ -190,7 +196,10 @@ public class MotorPH1 {
                 System.out.println("Employee not found.");
             }
         } catch (IOException e) {
-            
+          //IOException is an exception class that handles input-output related errors
+          //try & catch block helps to preventthe program from crashing due to errors
+          //the catch block is used to handle exceptions that might occur in the corresponding try block
+          //catch (IOException e) is used to catch and handle errors that occur while reading or writing files in Java. When such an error happens, the program jumps to the catch block, where you can write code to deal with the error, like displaying a message to the user or logging the problem for later review  
         }
     }
 
@@ -203,27 +212,30 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
         boolean employeeFound = false; // Flag to track if employee is found
         double totalWorkHours = 0; // Use double for decimal values
         double attendanceCount = 0; // Counter for attendance entries
-
+        boolean nameDisplayed = false; // Flag to track if name is already displayed
+        
         // Read and process attendance CSV file
         while ((line = br.readLine()) != null) {
             String[] attendanceData = line.split(csvSplitBy);
 
-            // Check if the attendance record matches employee ID, month, and week
+            // Check if the attendance record matches employee [0]ID,[7] month, and [8]week
             if (attendanceData.length > 9 && 
                 attendanceData[0].trim().equals(employeeNumber.trim()) && 
                 attendanceData[7].trim().equalsIgnoreCase(month.trim()) && 
                 attendanceData[8].trim().equalsIgnoreCase(week.trim())) {
-                System.out.println("  Last Name: " + attendanceData[1]);
-                System.out.println("  First Name: " + attendanceData[2]);
-                // Increment attendance count
+                
+                // Display employee name only if not already displayed
+                if (!nameDisplayed) {
+                    System.out.println("\nEmployee Name: " + attendanceData[2] + " " + attendanceData[1]);
+                    nameDisplayed = true; // Set flag to true after displaying name
+                }
+                
+                // Increment attendance count to compute the days that the employee worked in a week
                 attendanceCount++;
                 
-             
-             
                 // Display attendance details
                 System.out.println("\nATTENDANCE DETAILS:");
                 System.out.println("  Employee Number: " + attendanceData[0]);
-                
                 System.out.println("  Date: " + attendanceData[3]);
                 System.out.println("  Time In: " + attendanceData[4]);
                 System.out.println("  Time Out: " + attendanceData[5]);
@@ -233,49 +245,44 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 LocalTime timeOut = LocalTime.parse(attendanceData[5]);
                 Duration duration = Duration.between(timeIn, timeOut);
                 double decimalHours = duration.toMinutes() / 60.0 - 1; // Convert minutes to decimal hours
-                //System.out.printf("  Total Work Hours This Day: %.2f hrs\n", decimalHours ) ;
-               
-                //Grace Period, absences and halfday
-                if (decimalHours > 7.82) {
-                decimalHours = 8.0;
-                } else if (decimalHours <= 0) {
-                 decimalHours = 0.0;
-                } else if (decimalHours <= 4) {
-                 decimalHours = decimalHours + 1;
-                }
                 
+                // Apply rules for work hours calculation, grace period, absences, halfday
+                if (decimalHours > 7.82) {
+                    decimalHours = 8.0;
+                } else if (decimalHours <= 0) {
+                    decimalHours = 0.0;
+                } else if (decimalHours <= 4) {
+                    decimalHours += 1;
+                }
                 
                 System.out.printf("  Total Work Hours This Day: %.2f hrs\n", decimalHours);
 
-                // Accumulate total work hours
+                // Accumulate total work hours (shorthand of totalWorkHours = totalWorkHours + decimalHours;)
                 totalWorkHours += decimalHours;
 
-                // Display additional details as needed
                 employeeFound = true; // Set flag to true
-                
-             
             }
         }
-        
-        
 
         if (employeeFound) {
+            //no. of days that the employee worked in a week x 8 hrs per day
             double AttendanceTotal = (attendanceCount * 8);
           
             System.out.println("\nTotal Attendance Entries:" + attendanceCount);
             System.out.printf("Total Hours Entries:%.2f hrs\n" , AttendanceTotal);
             System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
+            
+            //tardiness calculation
             double Tardiness = (AttendanceTotal - totalWorkHours);
             System.out.printf("Tardiness: %.2f hrs\n", Tardiness);
 
-            
         } else {
             System.out.println("Attendance not found for the employee in the specified month and week.");
         }
     } catch (IOException e) {
         
-        }
     }
+}
 
 
     //-------------------OPTION 3 Data--------------------------------
@@ -283,16 +290,19 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
   public static void displayEmployeeAttendancePayroll(String employeeNumber, String month, String week) {
     try (BufferedReader br = new BufferedReader(new FileReader(attendanceCsvFile))) {
         String line;
-        boolean employeeFound = false; // Flag to track if employee is found
-        double totalWorkHours = 0; // Use double for decimal values
-        double attendanceCount = 0; // Counter for attendance entries
+        
 
-        float basicSalary = 0; // Initialize basicsalary rate 
-        float riceSubsidy = 0; // Initialize riceSubsidy rate
-        float phoneAllowance = 0; // Initialize phone allowance rate
-        float clothingAllowance = 0; // Initialize clothing allowance rate
-        float grossSemiMonthRate = 0; // Initialize clothing allowance rate
-        float hourlyRate = 0; // Initialize hourly rate
+        boolean employeeFound = false; // Flag to track if employee is found
+        
+        double totalWorkHours = 0; 
+        double attendanceCount = 0; 
+
+        float basicSalary = 0; 
+        float riceSubsidy = 0; 
+        float phoneAllowance = 0; 
+        float clothingAllowance = 0; 
+        float grossSemiMonthRate = 0; 
+        float hourlyRate = 0; 
         float taxRate = 0; 
         float sssRate = 0; 
         float philhealthRate = 0;        
@@ -313,18 +323,9 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 attendanceData[7].trim().equalsIgnoreCase(month.trim()) && 
                 attendanceData[8].trim().equalsIgnoreCase(week.trim())) {
                 
-                // Increment attendance count
+                // Increment attendance count to compute the days that the employee worked in a week
                 attendanceCount++;
-                
-             
-             
-                /* Display attendance details
-                System.out.println("\nATTENDANCE DETAILS:");
-                System.out.println("  Employee Number: " + attendanceData[0]);
-                
-                System.out.println("  Date: " + attendanceData[3]);
-                System.out.println("  Time In: " + attendanceData[4]);
-                System.out.println("  Time Out: " + attendanceData[5]);*/
+
                 
                 // Calculate work hours as decimal
                 LocalTime timeIn = LocalTime.parse(attendanceData[4]);
@@ -341,7 +342,6 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 } else if (decimalHours <= 4) {
                  decimalHours = decimalHours + 1;
                 }
-                //System.out.printf("  Total Work Hours This Day: %.2f hrs\n", decimalHours);
 
                 // Accumulate total work hours
                 totalWorkHours += decimalHours;
@@ -372,43 +372,42 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 float weeklyGross = hourlyRate * (float) totalWorkHours;
                 float allowances = (riceSubsidy + phoneAllowance + clothingAllowance) / 4; 
         
-    System.out.println("\nEmployee Name: " + employeeFirstName + " " + employeeLastName);
-    System.out.println("\nEMPLOYEE RATE : ");  
-    System.out.println("Monthly Basic : " + basicSalary + ", Weekly Basic: " + basicSalary / 4);  
-    System.out.println("Monthly RiceSubsidy: " + riceSubsidy + ", Weekly RiceSubsidy: " + riceSubsidy / 4);  
-    System.out.println("Monthly Phone Allowance: " + phoneAllowance + ", Weekly Phone Allowance: " + phoneAllowance / 4);
-    System.out.println("Monthly Clothing Allowance : " + clothingAllowance + ", Weekly Clothing Allowance : " + clothingAllowance / 4);
+        System.out.println("\nEmployee Name: " + employeeFirstName + " " + employeeLastName);
+        System.out.println("\nEMPLOYEE RATE : ");  
+        System.out.println("Monthly Basic : " + basicSalary + ", Weekly Basic: " + basicSalary / 4);  
+        System.out.println("Monthly RiceSubsidy: " + riceSubsidy + ", Weekly RiceSubsidy: " + riceSubsidy / 4);  
+        System.out.println("Monthly Phone Allowance: " + phoneAllowance + ", Weekly Phone Allowance: " + phoneAllowance / 4);
+        System.out.println("Monthly Clothing Allowance : " + clothingAllowance + ", Weekly Clothing Allowance : " + clothingAllowance / 4);
    
-    System.out.println("Gross Semi-Month Rate : " + grossSemiMonthRate);
+        System.out.println("Gross Semi-Month Rate : " + grossSemiMonthRate);
     
     
-    System.out.printf("\nEARNINGS:");
-    System.out.printf("\nHourly Rate: %.2f hrs\n", hourlyRate);
-    System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
+        System.out.printf("\nEARNINGS:");
+        System.out.printf("\nHourly Rate: %.2f hrs\n", hourlyRate);
+        System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
     
     
-    
-    System.out.printf("\nWeekly GROSS (HourlyRate * HoursWorkedForTheWeek): %.2f\n", weeklyGross); //%.2f in the printf to print 2 decimal amount
-    System.out.println("Weekly Allowances (riceSubsidy + phoneAllowance + clothingAllowance): " + allowances);
+        //%.2f in the printf to print 2 decimal amount
+        System.out.printf("\nWeekly GROSS (HourlyRate * HoursWorkedForTheWeek): %.2f\n", weeklyGross); //%.2f in the printf to print 2 decimal amount
+        System.out.println("Weekly Allowances (riceSubsidy + phoneAllowance + clothingAllowance): " + allowances);
                 
-    float earnings = (weeklyGross + (allowances));  // + allowances     
+                float earnings = (weeklyGross + (allowances));  // + allowances     
                 System.out.printf("\nTOTAL EARNINGS:%.2f\n", earnings);
     
                 // ----------------DEDUCTIONS EE SHARE----------------
                 System.out.printf("\nDEDUCTIONS (Employee Deductions & EE Share):");
                 
+             
                 //Tardiness
-             //   System.out.printf("\nTardiness: ");
-                //tardiness
-             double AttendanceTotal = (attendanceCount * 8);
-             System.out.println("\nTotal Attendance Entries:" + attendanceCount);
-             System.out.printf("Total Hours Entries:%.2f hrs\n" , AttendanceTotal);
-             System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
-             double Tardiness = (AttendanceTotal - totalWorkHours);
-             System.out.printf("Tardiness: %.2f hrs \n", Tardiness);
-             //System.out.println("Tardiness is already deducted from the Work Hours This Week");
+                double AttendanceTotal = (attendanceCount * 8);
+                System.out.println("\nTotal Attendance Entries:" + attendanceCount);
+                System.out.printf("Total Hours Entries:%.2f hrs\n" , AttendanceTotal);
+                System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
+                double Tardiness = (AttendanceTotal - totalWorkHours);
+                System.out.printf("Tardiness: %.2f hrs \n", Tardiness);
+                //System.out.println("Tardiness is already deducted from the Work Hours This Week");
+             
                 //Pagibig =(IF(basicSalary<=1500,(basicSalary*1%),(basicSalary*2%)))/4
-              
                 if (basicSalary <= 999) {
                 pagibigRate = 0;
                 } else if (basicSalary <= 1500) {
@@ -416,15 +415,14 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 } else if (basicSalary >= 1501) {
                 pagibigRate = (float) (basicSalary * 0.02 / 4);
                 }
-                // Check if pagibigRate exceeds 100 after calculations
+                //Check if pagibigRate exceeds 100 after calculations
                 if (pagibigRate >= 100) {
                 pagibigRate = 25;
                 }
                 System.out.printf("\nPagibig Rate: %.2f\n", pagibigRate);
                 
-
-                //Philhealth 
                 
+                //Philhealth            
                 if (basicSalary > 0)   {
                 philhealthRate = (float) (basicSalary * 0.03 / 4 / 2);
                 }
@@ -432,7 +430,6 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
 
                 
                 //SSS variable: sssRate
-                
                 if (basicSalary <= 21750) {
                 sssRate = 990f / 4;
                 } else if (basicSalary > 22250 && basicSalary <= 22750) {
@@ -451,7 +448,6 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 System.out.printf("SSS Rate: %.2f\n", sssRate);
                 
                 //Tax variable: taxRate
-                
                 if (basicSalary <= 20832) {
                 taxRate = 0;
                 } else if (basicSalary >= 20883 && basicSalary <= 33333) {
@@ -465,12 +461,9 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 } else if (basicSalary >= 666667) {
                 taxRate = (float) (200833.33 + basicSalary - (sssRate * 4) - (pagibigRate * 4) - (philhealthRate * 4)- 666667) * 0.35f / 4;
                 }
-
                 System.out.printf("Tax Rate: %.2f\n", taxRate);
    
-
-                
-                
+  
                 // ----------------TOTAL DEDUCTIONS ER SHARE----------------
                 System.out.printf("\nDEDUCTIONS (ER Employer Share):");
                 System.out.printf("\nPaibig Rate: %.2f\n", pagibigRate );
@@ -492,14 +485,12 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
             System.out.println("Employee not found or no attendance recorded for the specified month and week.");
         }
     } catch (IOException e) {
-       // e.printStackTrace();
+       
     }
 }
   
 
-
-
-    //------------------- Payroll Wage Elements --------------------------------
+    //-----------------To retrieve the Payroll Elements from the CSV file--------------------------------
   
 public static float getbasicSalaryFromEmployeeDetails(String csvFile, String employeeNumber) {
     float basicSalary = 0;
@@ -514,7 +505,7 @@ public static float getbasicSalaryFromEmployeeDetails(String csvFile, String emp
             // Check if the employee ID matches
             if (employeeData.length > 0 && employeeData[0].trim().equals(employeeNumber.trim())) {
                 // Retrieve hourly rate
-                basicSalary = Float.parseFloat(employeeData[13]); // Assuming hourly rate is at index 13
+                basicSalary = Float.parseFloat(employeeData[13]); //column 13
                 employeeFound = true; // Set flag to true
                 break; // Stop searching after finding the employee
             }
@@ -528,7 +519,6 @@ public static float getbasicSalaryFromEmployeeDetails(String csvFile, String emp
     }
     return basicSalary;
     } 
-  
   
  
 public static float getriceSubsidyFromEmployeeDetails(String csvFile, String employeeNumber) {
@@ -544,7 +534,7 @@ public static float getriceSubsidyFromEmployeeDetails(String csvFile, String emp
             // Check if the employee ID matches
             if (employeeData.length > 0 && employeeData[0].trim().equals(employeeNumber.trim())) {
                 // Retrieve hourly rate
-                riceSubsidy = Float.parseFloat(employeeData[14]); // Assuming hourly rate is at index 14
+                riceSubsidy = Float.parseFloat(employeeData[14]); // column 14
                 employeeFound = true; // Set flag to true
                 break; // Stop searching after finding the employee
             }
@@ -573,7 +563,7 @@ public static float getphoneAllowanceFromEmployeeDetails(String csvFile, String 
             // Check if the employee ID matches
             if (employeeData.length > 0 && employeeData[0].trim().equals(employeeNumber.trim())) {
                 // Retrieve hourly rate
-                phoneAllowance = Float.parseFloat(employeeData[15]); // Assuming hourly rate is at index 15
+                phoneAllowance = Float.parseFloat(employeeData[15]); // column 15
                 employeeFound = true; // Set flag to true
                 break; // Stop searching after finding the employee
             }
@@ -601,7 +591,7 @@ public static float getclothingAllowanceFromEmployeeDetails(String csvFile, Stri
             // Check if the employee ID matches
             if (employeeData.length > 0 && employeeData[0].trim().equals(employeeNumber.trim())) {
                 // Retrieve hourly rate
-                clothingAllowance = Float.parseFloat(employeeData[16]); // Assuming hourly rate is at index 16
+                clothingAllowance = Float.parseFloat(employeeData[16]); // column 16
                 employeeFound = true; // Set flag to true
                 break; // Stop searching after finding the employee
             }
@@ -631,7 +621,7 @@ public static float getgrossSemiMonthRateFromEmployeeDetails(String csvFile, Str
             // Check if the employee ID matches
             if (employeeData.length > 0 && employeeData[0].trim().equals(employeeNumber.trim())) {
                 // Retrieve hourly rate
-                grossSemiMonthRate = Float.parseFloat(employeeData[17]); // Assuming hourly rate is at index 17
+                grossSemiMonthRate = Float.parseFloat(employeeData[17]); //column 17
                 employeeFound = true; // Set flag to true
                 break; // Stop searching after finding the employee
             }
@@ -647,7 +637,6 @@ public static float getgrossSemiMonthRateFromEmployeeDetails(String csvFile, Str
     }
 
 
-
 public static float gethourlyRateFromEmployeeDetails(String csvFile, String employeeNumber) {
     float hourlyRate = 0;
     try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -661,7 +650,7 @@ public static float gethourlyRateFromEmployeeDetails(String csvFile, String empl
             // Check if the employee ID matches
             if (employeeData.length > 0 && employeeData[0].trim().equals(employeeNumber.trim())) {
                 // Retrieve hourly rate
-                hourlyRate = Float.parseFloat(employeeData[18]); // Assuming hourly rate is at index 18
+                hourlyRate = Float.parseFloat(employeeData[18]); //column 18
                 employeeFound = true; // Set flag to true
                 break; // Stop searching after finding the employee
             }
@@ -676,7 +665,3 @@ public static float gethourlyRateFromEmployeeDetails(String csvFile, String empl
     return hourlyRate;
     }
 }
-
-
-
-
