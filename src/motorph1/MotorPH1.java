@@ -1,3 +1,6 @@
+//Comprog1-MO-IT101-Group5
+//By: Group 5 - Jeffrey Dollopac, Joyce Ferrer, Ryu Ken Lindo, Mikko Jerome Bautista, 
+
 package motorph1;
 
 import java.io.BufferedReader;
@@ -7,7 +10,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Scanner;
 
-//TEST2 PUSH GITHUB
+
 public class MotorPH1 {
     private static final String[] usernames = {"user1", "user2", "user3"};
     private static final String[] passwords = {"123", "456", "789"};
