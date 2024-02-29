@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Scanner;
 
-//TEST PUSH GITHUB
+//TEST2 PUSH GITHUB
 public class MotorPH1 {
     private static final String[] usernames = {"user1", "user2", "user3"};
     private static final String[] passwords = {"123", "456", "789"};
