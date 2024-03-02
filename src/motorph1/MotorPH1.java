@@ -469,7 +469,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 System.out.printf("\nDEDUCTIONS (ER Employer Share):");
                 System.out.printf("\nPaibig Rate: %.2f\n", pagibigRate );
                 System.out.printf("Philhealth Rate: %.2f\n", philhealthRate);
-                System.out.printf("SSS Rate: %.2f\n", sssRate);
+                //System.out.printf("SSS Rate: %.2f\n", sssRate);
                 
                 // ----------------TOTAL DEDUCTIONS EE SHARE----------------
         
