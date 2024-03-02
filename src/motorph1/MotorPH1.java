@@ -182,9 +182,9 @@ public class MotorPH1 {
                 System.out.println("  Rice Subsidy: " + riceSubsidy);
                 System.out.println("  Phone Allowance: " + phoneAllowance);
                 System.out.println("  Clothing Allowance: " + clothingAllowance);
-                System.out.println("  Gross Semi-monthly Rate: " + grossSemiMonthRate);
+                //System.out.println("  Gross Semi-monthly Rate: " + grossSemiMonthRate);
                 System.out.println("  Hourly Rate: " + hourlyRate);
-                System.out.println("  GROSS: " + gross);   
+                //System.out.println("  GROSS: " + gross);   
                     
                               
                     employeeFound = true; // Set flag to true
@@ -380,7 +380,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
         System.out.println("Monthly Phone Allowance: " + phoneAllowance + ", Weekly Phone Allowance: " + phoneAllowance / 4);
         System.out.println("Monthly Clothing Allowance : " + clothingAllowance + ", Weekly Clothing Allowance : " + clothingAllowance / 4);
    
-        System.out.printf("Gross Semi-Month Rate : %.2f\n", grossSemiMonthRate);
+        //System.out.printf("Gross Semi-Month Rate : %.2f\n", grossSemiMonthRate);
     
         System.out.println("------------------------------------------------------------------------------");
         System.out.printf("EARNINGS:");
