@@ -175,7 +175,7 @@ public class MotorPH1 {
                 minuteRate = Float.parseFloat(employeeData[19]);    
                     
                 //set a variable for Gross calculation  
-                float gross = basicSalary + riceSubsidy + phoneAllowance + clothingAllowance + grossSemiMonthRate + hourlyRate;
+                float gross = basicSalary + riceSubsidy + phoneAllowance + clothingAllowance;
                 
                 System.out.println("\nSALARY DETAILS:");
                 System.out.println("  Basic Salary: " + basicSalary);
@@ -184,7 +184,7 @@ public class MotorPH1 {
                 System.out.println("  Clothing Allowance: " + clothingAllowance);
                 //System.out.println("  Gross Semi-monthly Rate: " + grossSemiMonthRate);
                 System.out.println("  Hourly Rate: " + hourlyRate);
-                //System.out.println("  GROSS: " + gross);   
+                System.out.println("  GROSS: " + gross);   
                     
                               
                     employeeFound = true; // Set flag to true
