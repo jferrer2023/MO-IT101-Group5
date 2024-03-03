@@ -245,6 +245,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
                 LocalTime timeOut = LocalTime.parse(attendanceData[5]);
                 Duration duration = Duration.between(timeIn, timeOut);
                 double decimalHours = duration.toMinutes() / 60.0 - 1; // Convert minutes to decimal hours
+                //-1 to deduct the 1 hour lunch break
                 
                 // Apply rules for work hours calculation, grace period, absences, halfday
                 if (decimalHours > 7.82) {
