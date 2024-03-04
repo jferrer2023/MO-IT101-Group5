@@ -178,15 +178,16 @@ public class MotorPH1 {
                 float gross = basicSalary + riceSubsidy + phoneAllowance + clothingAllowance;
                 
                 System.out.println("\nSALARY DETAILS:");
-                System.out.println("  Basic Salary: " + basicSalary);
-                System.out.println("  Rice Subsidy: " + riceSubsidy);
-                System.out.println("  Phone Allowance: " + phoneAllowance);
-                System.out.println("  Clothing Allowance: " + clothingAllowance);
+                System.out.printf("  Basic Salary: %.2f\n", basicSalary);
+                System.out.printf("  Rice Subsidy: %.2f\n", riceSubsidy);
+                System.out.printf("  Phone Allowance: %.2f\n", phoneAllowance);
+                System.out.printf("  Clothing Allowance: %.2f\n", clothingAllowance);
                 //System.out.println("  Gross Semi-monthly Rate: " + grossSemiMonthRate);
-                System.out.println("  Hourly Rate: " + hourlyRate);
-                System.out.println("  GROSS: " + gross);   
+                System.out.printf("  Hourly Rate: %.2f\n", hourlyRate);
+                System.out.printf("  GROSS: %.2f\n", gross);   
                     
-                              
+            
+     
                     employeeFound = true; // Set flag to true
                     break; // Stop searching after finding the employee
                 }
@@ -391,7 +392,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
     
         //%.2f in the printf to print 2 decimal amount
         System.out.printf("Weekly GROSS (HourlyRate * HoursWorkedForTheWeek): %.2f\n", weeklyGross); //%.2f in the printf to print 2 decimal amount
-        System.out.println("Weekly Allowances (riceSubsidy + phoneAllowance + clothingAllowance): " + allowances);
+        System.out.printf("Weekly Allowances (riceSubsidy + phoneAllowance + clothingAllowance): %.2f\n", allowances);
                 
                 float earnings = (weeklyGross + (allowances));  // + allowances     
                 System.out.printf("\n***TOTAL EARNINGS:%.2f\n", earnings);
