@@ -75,7 +75,8 @@ public class MotorPH1 {
                                 String inputEmployeeNumber2 = scanner.nextLine();
                                 System.out.print("Enter Month:");
                                 String inputMonth = scanner.nextLine();
-                                System.out.print("Enter Week:(Format- dd-mmm-yy:e.g. 03-jan-22):");
+                                System.out.println("Note: Payroll/Attendance count occurs every Monday");
+                                System.out.print("Enter Week: (Format: dd-mmm-yy e.g. 03-jan-22):");
                                 String inputWeek = scanner.nextLine();
                                 displayEmployeeAttendance(inputEmployeeNumber2, inputMonth, inputWeek);
                                 //displayEmployeeAttendance method to call the code for Option 2 - Attendance
@@ -86,8 +87,10 @@ public class MotorPH1 {
                                 String inputEmployeeNumber3 = scanner.nextLine();
                                 System.out.print("Enter Month:");
                                 String inputMonth2 = scanner.nextLine();
-                                System.out.print("Enter Week:(Format- dd-mmm-yy:e.g. 03-jan-22):");
+                                System.out.println("Note: Payroll/Attendance count occurs every Monday");
+                                System.out.print("Enter Week: (Format: dd-mmm-yy e.g. 03-jan-22):");
                                 String inputWeek2 = scanner.nextLine();
+                                
                                 displayEmployeeAttendancePayroll(inputEmployeeNumber3, inputMonth2, inputWeek2);
                                 //displayEmployeeAttendancePayroll method to call the code for Option 3 - Payroll Details
                                 break;
