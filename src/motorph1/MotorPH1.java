@@ -75,7 +75,7 @@ public class MotorPH1 {
                                 String inputEmployeeNumber2 = scanner.nextLine();
                                 System.out.print("Enter Month:");
                                 String inputMonth = scanner.nextLine();
-                                System.out.println("Note: Payroll/Attendance count occurs every Monday");
+                                System.out.println("Note: Payroll/Attendance count starts every Monday");
                                 System.out.print("Enter Week: (Format: dd-mmm-yy e.g. 03-jan-22):");
                                 String inputWeek = scanner.nextLine();
                                 displayEmployeeAttendance(inputEmployeeNumber2, inputMonth, inputWeek);
@@ -87,7 +87,7 @@ public class MotorPH1 {
                                 String inputEmployeeNumber3 = scanner.nextLine();
                                 System.out.print("Enter Month:");
                                 String inputMonth2 = scanner.nextLine();
-                                System.out.println("Note: Payroll/Attendance count occurs every Monday");
+                                System.out.println("Note: Payroll/Attendance count starts every Monday");
                                 System.out.print("Enter Week: (Format: dd-mmm-yy e.g. 03-jan-22):");
                                 String inputWeek2 = scanner.nextLine();
                                 
@@ -187,7 +187,7 @@ public class MotorPH1 {
                 System.out.printf("  Clothing Allowance: %.2f\n", clothingAllowance);
                 //System.out.println("  Gross Semi-monthly Rate: " + grossSemiMonthRate);
                 System.out.printf("  Hourly Rate: %.2f\n", hourlyRate);
-                System.out.printf("  GROSS: %.2f\n", gross);   
+                System.out.printf("  GROSS SALARY w/ ALLOWANCE: %.2f\n", gross);   
                     
             
      
