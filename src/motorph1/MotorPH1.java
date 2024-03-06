@@ -14,20 +14,21 @@ import java.util.Scanner;      //allows you to use the Scanner class, which is u
 
 
 public class MotorPH1 {
-    //array of predefined usernames and passwords 
+    // array of predefined usernames and passwords
     private static final String[] usernames = {"user1", "user2", "user3"};
     private static final String[] passwords = {"123", "456", "789"};
-    
-    //attendance CSV file Path
-    private static final String attendanceCsvFile = "C:\\Users\\IT-Spare\\Documents\\NetBeansProjects\\MotorPH1\\src\\motorph1\\MotorPH Attendance Details.csv"; 
-    private static final String csvSplitBy = ",";    //CSV file delimiter to separate the data by "," 
 
-    public static void main(String[] args) {    // Main method
+    // attendance CSV file Path
+    private static final String attendanceCsvFile = "C:\\Users\\IT-Spare\\Documents\\NetBeansProjects\\MotorPH1\\src\\motorph1\\MotorPH Attendance Details.csv";
+    private static final String csvSplitBy = ","; // CSV file delimiter to separate the data by ","
+
+    public static void main(String[] args) { // Main method
         // Try-with-resources to automatically close the input scanneror else will use scanner.close();
         try (Scanner scanner = new Scanner(System.in)) {
             String enteredUsername = "";
             String enteredPassword = "";
-            
+            int previousOption = -1;
+
             // Infinite loop for login until correct credentials are entered
             while (true) {
                 System.out.println("\nWELCOME TO MOTORPH");
@@ -37,19 +38,17 @@ public class MotorPH1 {
                 enteredPassword = scanner.nextLine();
 
                 int index = -1;
-                for (int i = 0; i < usernames.length; i++) {    // Loop through predefined usernames and passwords
-                    if (enteredUsername.equals(usernames[i]) && enteredPassword.equals(passwords[i])) {   // Check if username and password match
+                for (int i = 0; i < usernames.length; i++) { // Loop through predefined usernames and passwords
+                    if (enteredUsername.equals(usernames[i]) && enteredPassword.equals(passwords[i])) { // Check if username and password match
                         index = i;
                         break;
                     }
                 }
-                if (index != -1) {    
+                if (index != -1) {
                     // Authentication successful
-
-                    boolean backToMainMenu = false;
                     boolean logout = false;
 
-                    do {    // Loop for Main Menu Options
+                    do { // Loop for Main Menu Options
                         System.out.println("\nMAIN MENU");
                         System.out.println("  Option [1] - Employee Personal Details");
                         System.out.println("  Option [2] - Employee Attendance");
@@ -57,9 +56,22 @@ public class MotorPH1 {
                         System.out.println("  Option [4] - Logout");
 
                         System.out.print("\nPlease enter option: ");
-                        int optionNumber = scanner.nextInt();
-                        scanner.nextLine();
-
+                        
+                        //to display invalid option for the numbers that are not in the option and for the non-numeric value
+                        int optionNumber;
+                        if (previousOption != -1) {
+                          optionNumber = previousOption;
+                        previousOption = -1;
+                        } else {
+                        String input = scanner.nextLine();
+                        try {
+                        optionNumber = Integer.parseInt(input);  //used to convert the user input which is read as a String from the Scanner
+                        } catch (NumberFormatException e) {
+                        System.out.println("\nInvalid option. Please enter a valid numeric option.");
+                        continue;
+                        }
+                       }
+                       
                         boolean repeatCurrentOption = false;
                         switch (optionNumber) {
                             case 1: // Option 1: Employee Personal Details
@@ -90,19 +102,18 @@ public class MotorPH1 {
                                 System.out.println("Note: Payroll/Attendance count starts every Monday");
                                 System.out.print("Enter Week: (Format: dd-mmm-yy e.g. 03-jan-22):");
                                 String inputWeek2 = scanner.nextLine();
-                                
                                 displayEmployeeAttendancePayroll(inputEmployeeNumber3, inputMonth2, inputWeek2);
                                 //displayEmployeeAttendancePayroll method to call the code for Option 3 - Payroll Details
                                 break;
-                            case 4: //Option 4: Logout
+                            case 4: // Option 4: Logout
                                 System.out.println("\nExiting program...");
-                                logout = true; 
+                                logout = true;
                                 break;
-                            default:  // Default case for invalid options
+                            default: // Default case for invalid options
                                 System.out.println("\nOption not valid. Please enter a valid option.");
                                 repeatCurrentOption = true;
                                 break;
-                    }
+                        }
 
                         if (repeatCurrentOption) {
                             continue; // Repeat the current switch case
@@ -111,9 +122,11 @@ public class MotorPH1 {
                         if (!logout) {
                             System.out.print("\nBack to Main Menu? (Y/N): ");
                             String answer = scanner.nextLine();
-                            backToMainMenu = answer.equalsIgnoreCase("Y");
+                            if (answer.equalsIgnoreCase("N")) {
+                                previousOption = optionNumber;
+                            }
                         }
-                    } while (backToMainMenu && !logout); // Exit loop if user chooses "N" or if logout is true
+                    } while (!logout); // Exit loop if logout is true
 
                     // Ask for authentication variables after logout
                     enteredUsername = "";
@@ -124,8 +137,6 @@ public class MotorPH1 {
             }
         }
     }
-
-
 
 
     //-------------------OPTION 1 Data--------------------------------
@@ -273,7 +284,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
             //no. of days that the employee worked in a week x 8 hrs per day
             double AttendanceTotal = (attendanceCount * 8);
           
-            System.out.println("\nTotal Attendance Entries:" + attendanceCount);
+            System.out.printf("\nTotal Attendance Entries:%.2f \n", attendanceCount);
             System.out.printf("Total Hours Entries:%.2f hrs\n" , AttendanceTotal);
             System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
             
@@ -406,7 +417,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
              
                 //Tardiness
                 double AttendanceTotal = (attendanceCount * 8);
-                System.out.println("\nTotal Attendance Entries:" + attendanceCount);
+                System.out.printf("\nTotal Attendance Entries: %.2f\n", attendanceCount);
                 System.out.printf("Total Hours Entries:%.2f hrs\n" , AttendanceTotal);
                 System.out.printf("Total Work Hours This Week: %.2f hrs\n", totalWorkHours);
                 double Tardiness = (AttendanceTotal - totalWorkHours);
