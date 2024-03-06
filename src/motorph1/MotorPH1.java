@@ -332,7 +332,7 @@ public static void displayEmployeeAttendance(String employeeNumber, String month
         // Read and process attendance CSV file
         while ((line = br.readLine()) != null) {
             String[] attendanceData = line.split(csvSplitBy);
-
+//
             // Check if the attendance record matches employee ID, month, and week
             if (attendanceData.length > 9 && 
                 attendanceData[0].trim().equals(employeeNumber.trim()) && 
